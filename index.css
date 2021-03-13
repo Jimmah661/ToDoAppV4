@@ -1,0 +1,90 @@
+body {
+  font-family: sans-serif;
+  padding: 0px;
+  margin: 0px;
+}
+
+button {
+  background-color: #27b1f1;
+  color: white;
+  border: none;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 15px;
+  /* border: 1px solid #b2e3fa; */
+}
+
+ul {
+  max-width: 350px;
+  padding: inherit;
+}
+
+li {
+  background-color: white;
+  list-style-type: none;
+  margin-bottom: 5px;
+  padding: 3px;
+  border: 1px solid black;
+  -webkit-box-shadow:3px 3px 0px 0px #ccc;
+  -moz-box-shadow:3px 3px 0px 0px #ccc;
+  box-shadow:3px 3px 0px 0px #ccc;
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.todoDate {
+  color: grey;
+  font-size: smaller;
+  text-align: end;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: scroll;
+}
+
+.row {
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.finishedTodo {
+  text-decoration: line-through;
+}
+
+.swimlaneContainer {
+  display:flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.swimlane {
+  background-color: #ababab;
+  border-radius: 5px;
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  min-width: 200px;
+}
+
+.swimlaneTitle {
+  cursor: pointer;
+}
+
+.addTodoButton {
+  flex-grow: 1;
+  max-height: 40px;
+}
