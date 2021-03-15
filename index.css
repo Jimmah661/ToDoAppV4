@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;;
   padding: 0px;
   margin: 0px;
 }
@@ -7,36 +7,53 @@ body {
 button {
   background-color: #27b1f1;
   color: white;
-  border: none;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-radius: 15px;
-  /* border: 1px solid #b2e3fa; */
+  border: Solid 1px #1d98d0;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 3px;
+  text-align: left;
+  font-size: large;
 }
 
 ul {
   max-width: 350px;
-  padding: inherit;
+  padding: 0;
 }
 
 li {
-  background-color: white;
+  background-color: #EDEDED;
   list-style-type: none;
   margin-bottom: 5px;
   padding: 3px;
-  border: 1px solid black;
-  -webkit-box-shadow:3px 3px 0px 0px #ccc;
-  -moz-box-shadow:3px 3px 0px 0px #ccc;
-  box-shadow:3px 3px 0px 0px #ccc;
+  border: 1px solid #065374;
+  -webkit-box-shadow:0px 1px 0px 0px #ccc;
+  -moz-box-shadow:0px 1px 0px 0px #ccc;
+  box-shadow:0px 1px 0px 0px #ccc;
   cursor: pointer;
+  border-radius: 3px;
 }
 
 p {
   margin: 0;
   padding: 0;
   pointer-events: none;
+}
+
+input {
+  background-color: transparent;
+  border-color: transparent;
+  font-family: Arial, Helvetica, sans-serif;;
+  color: #065374;
+  outline: none;
+  font-size: 1em;
+  padding: 0px;
+  margin: 0px;
+}
+
+.todoContent {
+  color: #065374;
 }
 
 .todoDate {
@@ -73,15 +90,19 @@ p {
 .swimlane {
   background-color: #ababab;
   border-radius: 5px;
-  padding: .5rem;
+  padding: .3rem;
   display: flex;
   flex-direction: column;
   margin: 5px;
   min-width: 200px;
+  padding-top: 10px;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .swimlaneTitle {
   cursor: pointer;
+  letter-spacing: 1px;
 }
 
 .addTodoButton {
