@@ -1,3 +1,5 @@
+var todoBeingDragged = false;
+
 database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
   todoSnapshot.docChanges().forEach(todo => {
     let data = todo.doc.data()
@@ -30,9 +32,22 @@ database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
         todoItem.appendChild(dateNode);
       }
 
+      // TODO - This is temporary, need a better way to remove todos
+      // Create a remove button for the todos
+      let delNode = document.createElement("div")
+      delNode.classList.add("delNode")
+      delNode.addEventListener("click", (e) => {
+        database.collection("todo").doc(id).delete()
+        let deletedTodo = document.querySelector("#" + CSS.escape(id))
+        deletedTodo.remove()
+      })
+      todoItem.appendChild(delNode)
+
 
       // Add event listeners for dragging of the Todos
       todoItem.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData("element", "Todo")
+        e.dataTransfer.setData("id", `${id}`)
           todoItem.classList.add("dragging");
           todoBeingDragged = true;
           e.stopPropagation();
