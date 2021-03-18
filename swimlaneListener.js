@@ -31,7 +31,7 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
       // Create the Button element used to add a new ToDo, assign it a class and provide it with the + symbol as the inner text. Finally, append it to the swimlane
       let addTodoButton = document.createElement("button")
       addTodoButton.classList.add("addTodoButton")
-      addTodoButton.innerText = "+"
+      addTodoButton.innerText = "+ Add ToDo"
       addTodoButton.addEventListener("click", () => newTodo(change.doc.id))
       swimlane.append(addTodoButton)
 
@@ -45,7 +45,7 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
         let droppableSwimlane = e.target.closest("UL")
         let draggingTodo = document.querySelector(".dragging")
         let afterElement = getDragAfterElement(e.clientY)
-
+        droppableSwimlane === null ?  droppableSwimlane = e.target.querySelector("UL") : droppableSwimlane
         if (todoBeingDragged === true && droppableSwimlane != null) {
           if (afterElement == null) {
             droppableSwimlane.append(draggingTodo)
