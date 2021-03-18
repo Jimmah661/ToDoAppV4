@@ -1,7 +1,19 @@
+html {
+  margin: 0;
+  padding:0;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;;
   padding: 0px;
   margin: 0px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
 }
 
 button {
@@ -41,19 +53,20 @@ p {
   pointer-events: none;
 }
 
-input {
+li input {
   background-color: transparent;
   border-color: transparent;
   font-family: Arial, Helvetica, sans-serif;;
   color: #065374;
   outline: none;
   font-size: 1em;
-  padding: 0px;
+  padding: 3px;
   margin: 0px;
 }
 
 .todoContent {
   color: #065374;
+  padding: 3px
 }
 
 .todoDate {
@@ -62,29 +75,17 @@ input {
   text-align: end;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: scroll;
-}
-
-.row {
-  flex-direction: row;
-  margin-top: 10px;
-}
-
 .finishedTodo {
   text-decoration: line-through;
 }
 
 .swimlaneContainer {
+  flex-grow: 1;
   display:flex;
   flex-direction: row;
   width: 100%;
-  height: 100%;
+height: 20vh;
+  position: relative;
 }
 
 .swimlane {
@@ -98,6 +99,7 @@ input {
   padding-top: 10px;
   overflow-y: scroll;
   scrollbar-width: none;
+  max-height: 100%;
 }
 
 .swimlaneTitle {
@@ -105,7 +107,8 @@ input {
   letter-spacing: 1px;
 }
 
-.addTodoButton {
-  flex-grow: 1;
-  max-height: 40px;
+.delNode {
+  width: 10px;
+  height: 10px;
+  background-color: black;
 }
