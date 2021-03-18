@@ -28,17 +28,14 @@ function getDragAfterSwimlane(xCoordinate) {
 
 document.querySelector(".swimlaneContainer").addEventListener("dragend", (e) => {
   let swimlaneArray = [...document.querySelectorAll(".swimlane:not(.newSwimlane")]
-
   // TODO - Need function to do an update of the todo's on the database
   if (e.target.nodeName === "LI") {
     swimlaneArray.forEach((swimlane, swimlaneIndex) => {
       let todoArray = [...swimlane.querySelectorAll(".todo")]
       todoArray.forEach((todo, todoIndex) => {
-        console.log(todo.id, todoIndex)
         database.collection("todo").doc(todo.id).update({"parentSwimlane": swimlane.id, "todoPosition": todoIndex})
       })
     })
-    let todoArray = [...document.querySelectorAll(".todo")]
   }
 
   // Update the swimlane positions in the database
