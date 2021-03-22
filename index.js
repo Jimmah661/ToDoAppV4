@@ -10,6 +10,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var database = firebase.firestore();
+var auth = firebase.auth()
 
 
 function setAttributes(element, attributes) {
@@ -17,3 +18,10 @@ function setAttributes(element, attributes) {
     element.setAttribute(key, attributes[key])
   }
 }
+
+auth.onAuthStateChanged((user) => {
+  if (!user && location.pathname != "/login.html") {
+    window.location.replace("./login.html")
+  } else {
+  }
+})
