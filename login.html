@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="login.css" />
+  <script src="./index.js" defer></script>
+  <script src="./login.js" defer></script>
+  <title>To-Done Login</title>
+</head>
+<body>
+  <div class="loginContainer">
+    <form id="loginForm">
+      <div class="formField">
+        <label for="email">Email</label>
+        <input id="email" type="email" />
+      </div>
+      <div class="formField">
+        <label for="password">Password</label>
+        <input id="password" type="password" />
+      </div>
+      <button type="button" id="signUpButton">Sign Up</button>
+      <button type="submit" id="login">Submit</button>
+    </form>
+    <form id="signupForm" class="form inactive">
+      <div class="formField">
+        <label for="signupEmail">Email</label>
+        <input id="signupEmail" type="email" />
+      </div>
+      <div class="formField">
+        <label for="signupPassword">Password</label>
+        <input id="signupPassword" type="password" />
+      </div>
+      <div class="formField">
+        <label for="verifyPassword">Verify Password</label>
+        <input id="verifyPassword" type="password" />
+      </div>
+      <button type="button" id="loginButton">Login</button>
+      <button type="submit" id="signup">Submit</button>
+    </form>
+  </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+
+</body>
+</html>

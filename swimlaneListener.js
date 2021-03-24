@@ -1,3 +1,5 @@
+export async function makeSwimlanes (database) {
+
 // Listen for the swimlanes. Once found, generate the lanes on the board
 // All lanes should stack to the left first, there will always be an empty swimlane on the right that can be added to the board
 // All lanes will extend from the top of the Board to the bottom of the visible screen and will have verticle scrolling for the ToDos that are inside it.
@@ -127,16 +129,6 @@ function swimlaneHeaderInputOnfocusout(e) {
 }
 
 
-document.querySelector('.addSwimlaneButton').addEventListener("click", () => {
-  let currentSwimlanes = [...document.querySelectorAll(".swimlane:not(.newSwimlane)")]
-  let newSwimlane = {
-    swimlaneTitle: "New Swimlane",
-    swimlanePosition: currentSwimlanes.length
-  }
-  database.collection("swimlanes").add(newSwimlane)
-})
-
-
 // Function generates a new Todo card in the swimlane
 function newTodo (swimlaneID) {
   let currentSwimlane = document.querySelector("#" + CSS.escape(swimlaneID))
@@ -149,4 +141,10 @@ function newTodo (swimlaneID) {
     parentSwimlane: swimlaneID
   }
   database.collection("todo").add(newTodo)
+}
+}
+function setAttributes(element, attributes) {
+  for(var key in attributes) {
+    element.setAttribute(key, attributes[key])
+  }
 }
