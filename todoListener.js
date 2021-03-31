@@ -1,4 +1,5 @@
-var todoBeingDragged = false;
+import {setAttributes} from "./assets/helperFunctions.js"
+
 export function createTodos (database) {
 database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
   todoSnapshot.docChanges().forEach(todo => {
@@ -49,13 +50,13 @@ database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
         // TODO - I think this dataTransfer function is going to be a cleaner way to transfer information rather than travelling the DOM to get ID's
         e.dataTransfer.setData("element", "Todo")
         e.dataTransfer.setData("id", `${id}`)
-          todoItem.classList.add("dragging");
-          todoBeingDragged = true;
-          e.stopPropagation();
+        todoItem.classList.add("dragging");
+        // todoBeingDragged = true;
+        e.stopPropagation();
         })
       todoItem.addEventListener('dragend', () => {
         todoItem.classList.remove("dragging");
-        todoBeingDragged = false;
+        // todoBeingDragged = false;
       })
       todoItem.addEventListener('click', (e) => todoContentOnclick(e, id))
 
@@ -101,10 +102,4 @@ function todoContentInputOnfocusout(e, id) {
   p.classList.add("todoContent")
   e.target.replaceWith(p)
 }
-}
-
-function setAttributes(element, attributes) {
-  for(var key in attributes) {
-    element.setAttribute(key, attributes[key])
-  }
 }

@@ -1,3 +1,5 @@
+import {setAttributes} from "./assets/helperFunctions.js"
+
 export async function makeSwimlanes (database) {
 
 // Listen for the swimlanes. Once found, generate the lanes on the board
@@ -48,7 +50,9 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
         let draggingTodo = document.querySelector(".dragging")
         let afterElement = getDragAfterElement(e.clientY)
         droppableSwimlane === null ?  droppableSwimlane = e.target.querySelector("UL") : droppableSwimlane
-        if (todoBeingDragged === true && droppableSwimlane != null) {
+        //Trying to remove the global "TodoBeingDragged" variable
+        // Swapped over to checking the dataTransfer attribute of the drag event 
+        if (e.dataTransfer.getData("element") === "Todo" && droppableSwimlane != null) {
           if (afterElement == null) {
             droppableSwimlane.append(draggingTodo)
           } else {
@@ -76,7 +80,7 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
       swimlaneContainer.insertBefore(swimlane, document.querySelector(".newSwimlane"))
     }
     if (change.type === "modified") {
-      console.log("Modified", change.doc.id)
+      // console.log("Modified", change.doc.id)
       // Function to reorder the swimlane list on database modification
       let newElement = document.querySelector("#" + CSS.escape(change.doc.id))
       let parentElement = document.querySelector(".swimlaneContainer")
@@ -89,7 +93,7 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
       }
     }
     if (change.type ==="removed") {
-      console.log("removed", change.doc.id)
+      // console.log("removed", change.doc.id)
       let removedSwimlane = document.querySelector(`#${CSS.escape(change.doc.id)}`)
       removedSwimlane.remove()
 
@@ -142,9 +146,4 @@ function newTodo (swimlaneID) {
   }
   database.collection("todo").add(newTodo)
 }
-}
-function setAttributes(element, attributes) {
-  for(var key in attributes) {
-    element.setAttribute(key, attributes[key])
-  }
 }
