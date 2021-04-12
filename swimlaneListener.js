@@ -1,4 +1,4 @@
-import {setAttributes} from "./assets/helperFunctions.js"
+import {setAttributes, getDragAfterElement} from "./assets/helperFunctions.js"
 
 export async function makeSwimlanes (database) {
 
@@ -27,6 +27,13 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
       swimlaneTitle.addEventListener("click", (e) => swimlaneHeaderOnclick(e))
       swimlane.append(swimlaneTitle)
 
+      let swimlaneTitleInput = document.createElement("input")
+      swimlaneTitleInput.value = change.doc.data().swimlaneTitle
+      swimlaneTitleInput.classList.add("swimlaneTitleInput")
+      swimlaneTitleInput.style.display = "none"
+      // swimlaneTitleInput.addEventListener("focusout", (e) => swimlaneHeaderInputOnfocusout(e))
+      swimlane.append(swimlaneTitleInput)
+
       // Generate the unordered list that all ToDos will be placed in
       let todoList = document.createElement("ul")
       todoList.classList.add("todoList")
@@ -48,7 +55,8 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
         e.preventDefault()
         let droppableSwimlane = e.target.closest("UL")
         let draggingTodo = document.querySelector(".dragging")
-        let afterElement = getDragAfterElement(e.clientY)
+        // let afterElement = getDragAfterElement(e.clientY)
+        let afterElement = getDragAfterElement(e.clientY, e.dataTransfer.getData("element"), droppableSwimlane)
         droppableSwimlane === null ?  droppableSwimlane = e.target.querySelector("UL") : droppableSwimlane
         //Trying to remove the global "TodoBeingDragged" variable
         // Swapped over to checking the dataTransfer attribute of the drag event 
@@ -60,20 +68,6 @@ database.collection("swimlanes").orderBy("swimlanePosition").onSnapshot(swimlane
           }
         }
 
-        function getDragAfterElement(y) {
-          // This turnery operator exists only to prevent console errors when you're not floating over a UL
-          let todoArray = droppableSwimlane ? [...droppableSwimlane.querySelectorAll(".todo:not(.dragging)")] : [];
-          return todoArray.reduce((accumulator, currentValue) => {
-            const box = currentValue.getBoundingClientRect()
-            const offset = y - box.top - box.height / 2
-            if (offset < 0 && offset > accumulator.offset) {
-              return { offset: offset, element: currentValue }
-            } else {
-              return accumulator
-            }
-
-          }, {offset: Number.NEGATIVE_INFINITY}).element
-        }
       })
 
       // Insert the swimlane before the newSwimlane option

@@ -1,5 +1,6 @@
 import {makeSwimlanes} from "./swimlaneListener.js"
 import {createTodos} from "./todoListener.js"
+import {getDragAfterElement} from "./assets/helperFunctions.js"
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyCnag-BJpnfcTbf1oVMACMYKsIE26TxoMg",
@@ -52,7 +53,7 @@ document.querySelector(".swimlaneContainer").addEventListener("dragover", (e) =>
     let swimlaneContainer = document.querySelector(".swimlaneContainer")
     e.preventDefault();
     let swimlaneDragging = document.querySelector(".swimlaneDragging")
-    const afterSwimlane = getDragAfterSwimlane(e.clientX)
+    const afterSwimlane = getDragAfterElement(e.clientX, e.dataTransfer.getData("element"))
     if (afterSwimlane == null) {
       swimlaneContainer.insertBefore(swimlaneDragging, document.querySelector(".newSwimlane"))
     } else {
@@ -60,19 +61,6 @@ document.querySelector(".swimlaneContainer").addEventListener("dragover", (e) =>
     } 
   }
 })
-
-function getDragAfterSwimlane(xCoordinate) {
-  let swimlaneArray = [...document.querySelectorAll(".swimlane:not(.swimlaneDragging):not(.newSwimlane)")]
-  return swimlaneArray.reduce((previous, current) => {
-    let box = current.getBoundingClientRect();
-    const offset = xCoordinate - box.left - box.width / 2
-    if (offset < 0 && offset > previous.offset) {
-      return {offset: offset, element: current}
-    } else {
-      return previous
-    }
-  }, { offset: Number.NEGATIVE_INFINITY}).element
-}
 
 document.querySelector(".swimlaneContainer").addEventListener("dragend", (e) => {
   let swimlaneArray = [...document.querySelectorAll(".swimlane:not(.newSwimlane")]
