@@ -34,7 +34,9 @@ ul {
   padding: 0;
 }
 
-li {
+.todo {
+  display: flex;
+  flex-direction: column;
   background-color: #EDEDED;
   list-style-type: none;
   margin-bottom: 5px;
@@ -62,6 +64,11 @@ li input {
   font-size: 1em;
   padding: 3px;
   margin: 0px;
+}
+
+li div {
+  display: flex;
+  justify-content: space-between;
 }
 
 .todoContent {
