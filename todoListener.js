@@ -1,4 +1,5 @@
 import {setAttributes} from "./assets/helperFunctions.js"
+import {openModal} from "./todoFunctions/openModal.js"
 
 export function createTodos (database) {
 database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
@@ -24,7 +25,7 @@ database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
       topLine.appendChild(textNode);
 
       let svgMenuButton = document.createElement("img")
-      
+      svgMenuButton.addEventListener("click", () => openModal(todo))
       setAttributes(
         svgMenuButton,
         {

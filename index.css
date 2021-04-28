@@ -119,3 +119,13 @@ height: 20vh;
   height: 10px;
   background-color: black;
 }
+
+.todoModal {
+  z-index: 100;
+  min-width: 80vw;
+  min-height: 80vh;
+  position:absolute;
+  background-color: white;
+  top: 10vh;
+  left: 10vw;
+}
