@@ -1,4 +1,6 @@
-var todoBeingDragged = false;
+import {setAttributes} from "./assets/helperFunctions.js"
+import {openModal} from "./todoFunctions/openModal.js"
+
 export function createTodos (database) {
 database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
   todoSnapshot.docChanges().forEach(todo => {
@@ -14,13 +16,45 @@ database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
         })
       todoItem.classList.add("todo")
 
+      let topLine = document.createElement("div");
 
       // Create and append P tag with Todo content
       let textNode = document.createElement("p");
       textNode.setAttribute("class", "todoContent");
       textNode.textContent = data.todoContent;
-      todoItem.appendChild(textNode);
+      topLine.appendChild(textNode);
 
+      let svgMenuButton = document.createElement("img")
+      svgMenuButton.addEventListener("click", () => openModal(todo))
+      setAttributes(
+        svgMenuButton,
+        {
+          "src": "./assets/images/hamburger.svg",
+          "width": "15px"
+        }
+      )
+      topLine.appendChild(svgMenuButton)
+
+
+      let bottomLine = document.createElement("div");
+
+      // TODO - This is temporary, need a better way to remove todos
+      // Create a remove button for the todos
+      let delNode = document.createElement("img")
+      setAttributes(
+        delNode,
+        {
+          "src": "./assets/images/trashcan.svg",
+          "width": "15px"
+        }
+      )
+      // delNode.classList.add("delNode")
+      delNode.addEventListener("click", (e) => {
+        database.collection("todo").doc(id).delete()
+        let deletedTodo = document.querySelector("#" + CSS.escape(id))
+        deletedTodo.remove()
+      })
+      bottomLine.appendChild(delNode)
 
       // Create and Append P tag with Date content
       if (data.dateSubmitted) {
@@ -29,19 +63,12 @@ database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
         dateNode.setAttribute("class", "todoDate");
         let date = new Date(epochSeconds * 1000);
         dateNode.textContent = `${date.toLocaleTimeString()} - ${date.toLocaleDateString()}`;
-        todoItem.appendChild(dateNode);
+        bottomLine.appendChild(dateNode);
       }
+      
+      todoItem.appendChild(topLine)
+      todoItem.appendChild(bottomLine)
 
-      // TODO - This is temporary, need a better way to remove todos
-      // Create a remove button for the todos
-      let delNode = document.createElement("div")
-      delNode.classList.add("delNode")
-      delNode.addEventListener("click", (e) => {
-        database.collection("todo").doc(id).delete()
-        let deletedTodo = document.querySelector("#" + CSS.escape(id))
-        deletedTodo.remove()
-      })
-      todoItem.appendChild(delNode)
 
 
       // Add event listeners for dragging of the Todos
@@ -49,13 +76,13 @@ database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
         // TODO - I think this dataTransfer function is going to be a cleaner way to transfer information rather than travelling the DOM to get ID's
         e.dataTransfer.setData("element", "Todo")
         e.dataTransfer.setData("id", `${id}`)
-          todoItem.classList.add("dragging");
-          todoBeingDragged = true;
-          e.stopPropagation();
+        todoItem.classList.add("dragging");
+        // todoBeingDragged = true;
+        e.stopPropagation();
         })
       todoItem.addEventListener('dragend', () => {
         todoItem.classList.remove("dragging");
-        todoBeingDragged = false;
+        // todoBeingDragged = false;
       })
       todoItem.addEventListener('click', (e) => todoContentOnclick(e, id))
 
@@ -66,7 +93,10 @@ database.collection("todo").orderBy("todoPosition").onSnapshot(todoSnapshot => {
       let modifiedTodo = document.querySelector("#" + CSS.escape(id))
       let targetSwimlane = document.querySelector("#" + CSS.escape(data.parentSwimlane) + " ul")
       targetSwimlane.insertBefore(modifiedTodo, targetSwimlane.children[data.todoPosition])
-      modifiedTodo.firstChild.textContent = data.todoContent
+      // modifiedTodo.firstChild.textContent = data.todoContent
+      let updatedContent = modifiedTodo.querySelector(".todoContent");
+      updatedContent.textContent = data.todoContent;
+
     } else if (todo.type === "deleted") {
       let deletedTodo = document.querySelector("#" + CSS.escape(id))
       deletedTodo.remove()
@@ -101,10 +131,4 @@ function todoContentInputOnfocusout(e, id) {
   p.classList.add("todoContent")
   e.target.replaceWith(p)
 }
-}
-
-function setAttributes(element, attributes) {
-  for(var key in attributes) {
-    element.setAttribute(key, attributes[key])
-  }
 }
